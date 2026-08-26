@@ -141,7 +141,7 @@ export function evaluate(draft: TradeDraft, trades: Trade[]): Verdict {
   if (drag.length && drag.length >= good.length) {
     return {
       decision: "NO",
-      headline: `No exact match. Closest history is negative — ${drag[0].label} is dragging it down.`,
+      headline: `No exact match. Closest history is negative — ${drag[0]!.label} is dragging it down.`,
       exact,
       partials,
       blockers,
