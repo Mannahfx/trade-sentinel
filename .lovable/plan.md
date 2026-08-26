@@ -32,18 +32,20 @@ A premium one-page dark dashboard for logging trades, scoring setups, and chatti
 
 **Bottom — Recent trades ledger:** sortable table, sticky header, zebra rows, badges for Direction and Outcome, row expand for notes, delete per row.
 
-## Scoring rules (Take Trade?)
+## Take Trade? — based on your own history, not a grade
 
-Score out of 10; YES at >= 6 with no hard blocker.
+No arbitrary A/B/C points. The indicator reads the current form as a **combination** and looks up how that exact combination has actually performed in your saved trades.
 
-- Zone Quality A = 3, B = 2, C = 0
-- 4H Algo Structure A = 3, B = 2, C = 0
-- Entry trigger present and confirmed = 2
-- Planned R >= 2 = 2 (>= 3 keeps 2, < 1.5 = 0)
-- HTF zone TF higher than entry TF (alignment) = required, else hard blocker
-- Any mistake tag selected = hard blocker (NO)
+- The combination key is: Zone Quality + 4H Algo Structure + Zone type + Entry trigger (with HTF/Entry TF pairing).
+- The breakdown shows plain-language history lines, for example:
+  - "A + FVG + BOS entry on 4H->15M: 7 trades, 6 wins, 1 loss (86%), avg +1.9R — WON before"
+  - "A + OB + wick rejection: 4 trades, 1 win, 3 losses (25%), avg -0.6R — LOST before"
+- Verdict: YES when the matched combination is net profitable with a positive win rate, NO when it has lost before, and "No data yet" (neutral) when the exact combination has never been traded.
+- When there is no exact match, it falls back to the closest partial matches (each factor's individual win/loss record) and says which factor is dragging it down.
+- Any selected mistake tag still forces NO.
 
-Each rule shows in the breakdown with its earned points, so the logic is transparent and easy to tune later.
+So the dashboard learns from your saved journal: the more trades you log, the sharper the YES/NO gets.
+
 
 ## Data and AI
 
