@@ -1,4 +1,4 @@
-import { MISTAKE_TAGS, type Trade } from "./types";
+import { DEFAULT_MISTAKE_TAGS, type Trade } from "./types";
 
 function download(filename: string, content: string, mime: string) {
   const blob = new Blob([content], { type: mime });
@@ -16,7 +16,7 @@ function csvCell(value: string | number | null) {
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
-export function downloadCsv(trades: Trade[]) {
+export function downloadCsv(trades: Trade[], mistakeTags: readonly string[] = DEFAULT_MISTAKE_TAGS) {
   const headers = [
     "id",
     "datetime",
@@ -34,7 +34,7 @@ export function downloadCsv(trades: Trade[]) {
     "outcome",
     "outcome_binary",
     "take_trade",
-    ...MISTAKE_TAGS.map((t) => `mistake_${t.toLowerCase().replace(/\s+/g, "_")}`),
+    ...mistakeTags.map((t) => `mistake_${t.toLowerCase().replace(/\s+/g, "_")}`),
     "why_taken",
     "improvement",
   ];
@@ -56,7 +56,7 @@ export function downloadCsv(trades: Trade[]) {
     t.outcome,
     t.outcome === "Win" ? 1 : t.outcome === "Loss" ? 0 : "",
     t.takeTrade,
-    ...MISTAKE_TAGS.map((tag) => (t.mistakes.includes(tag) ? 1 : 0)),
+    ...mistakeTags.map((tag) => (t.mistakes.includes(tag) ? 1 : 0)),
     t.whyTaken,
     t.improvement,
   ]);
