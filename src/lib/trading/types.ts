@@ -1,4 +1,4 @@
-export const INSTRUMENTS = [
+export const DEFAULT_INSTRUMENTS = [
   "Volatility 10 Index",
   "Volatility 10 (1s) Index",
   "Volatility 25 Index",
@@ -20,9 +20,9 @@ export const INSTRUMENTS = [
   "Jump 100 Index",
 ] as const;
 
-export const ZONE_TYPES = ["FVG", "OB"] as const;
-export const TIMEFRAMES = ["1M", "5M", "15M", "30M", "1H", "4H", "D1", "W1"] as const;
-export const ENTRY_TRIGGERS = [
+export const DEFAULT_ZONE_TYPES = ["FVG", "OB"] as const;
+export const DEFAULT_TIMEFRAMES = ["1M", "5M", "15M", "30M", "1H", "4H", "D1", "W1"] as const;
+export const DEFAULT_ENTRY_TRIGGERS = [
   "BOS",
   "CHoCH",
   "Wick rejection",
@@ -31,11 +31,11 @@ export const ENTRY_TRIGGERS = [
   "M15 FVG tap",
   "No trigger",
 ] as const;
-export const GRADES = ["A", "B", "C"] as const;
+export const DEFAULT_GRADES = ["A", "B", "C"] as const;
 export const OUTCOMES = ["Win", "Loss", "BE", "No trade"] as const;
 export const DIRECTIONS = ["BUY", "SELL"] as const;
 
-export const MISTAKE_TAGS = [
+export const DEFAULT_MISTAKE_TAGS = [
   "Entered early",
   "Wrong bias",
   "TP too early",
