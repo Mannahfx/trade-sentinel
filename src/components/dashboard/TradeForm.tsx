@@ -1,15 +1,5 @@
-import {
-  DIRECTIONS,
-  ENTRY_TRIGGERS,
-  GRADES,
-  INSTRUMENTS,
-  MISTAKE_TAGS,
-  OUTCOMES,
-  TIMEFRAMES,
-  ZONE_TYPES,
-  type Direction,
-  type TradeDraft,
-} from "@/lib/trading/types";
+import { DIRECTIONS, OUTCOMES, type Direction, type TradeDraft } from "@/lib/trading/types";
+import type { Criteria } from "@/lib/trading/criteria";
 import { Chip, Field, GlassCard, Input, SectionTitle, Select, Textarea } from "./primitives";
 import { Dropzone } from "./Dropzone";
 import { cn } from "@/lib/utils";
@@ -17,9 +7,13 @@ import { cn } from "@/lib/utils";
 export function TradeForm({
   draft,
   update,
+  criteria,
+  onEditCriteria,
 }: {
   draft: TradeDraft;
   update: <K extends keyof TradeDraft>(key: K, value: TradeDraft[K]) => void;
+  criteria: Criteria;
+  onEditCriteria: () => void;
 }) {
   const toggleMistake = (tag: string) =>
     update(
@@ -31,7 +25,16 @@ export function TradeForm({
 
   return (
     <GlassCard className="p-5 sm:p-6">
-      <SectionTitle hint="Every field feeds the model dataset">Trade entry</SectionTitle>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <SectionTitle hint="Every field feeds the model dataset">Trade entry</SectionTitle>
+        <button
+          type="button"
+          onClick={onEditCriteria}
+          className="shrink-0 rounded-xl border border-glass-border bg-glass px-3 py-1.5 text-xs font-medium text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:text-electric"
+        >
+          Edit criteria
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Field label="Date / Time" className="sm:col-span-1">
@@ -44,7 +47,7 @@ export function TradeForm({
 
         <Field label="Instrument" className="sm:col-span-1">
           <Select
-            options={INSTRUMENTS}
+            options={criteria.instruments}
             value={draft.instrument}
             onChange={(e) => update("instrument", e.target.value as TradeDraft["instrument"])}
           />
@@ -75,21 +78,21 @@ export function TradeForm({
 
         <Field label="Zone type">
           <Select
-            options={ZONE_TYPES}
+            options={criteria.zoneTypes}
             value={draft.zoneType}
             onChange={(e) => update("zoneType", e.target.value as TradeDraft["zoneType"])}
           />
         </Field>
         <Field label="HTF zone TF">
           <Select
-            options={TIMEFRAMES}
+            options={criteria.timeframes}
             value={draft.htfZoneTf}
             onChange={(e) => update("htfZoneTf", e.target.value as TradeDraft["htfZoneTf"])}
           />
         </Field>
         <Field label="Entry TF">
           <Select
-            options={TIMEFRAMES}
+            options={criteria.timeframes}
             value={draft.entryTf}
             onChange={(e) => update("entryTf", e.target.value as TradeDraft["entryTf"])}
           />
@@ -97,21 +100,21 @@ export function TradeForm({
 
         <Field label="Entry trigger">
           <Select
-            options={ENTRY_TRIGGERS}
+            options={criteria.entryTriggers}
             value={draft.entryTrigger}
             onChange={(e) => update("entryTrigger", e.target.value as TradeDraft["entryTrigger"])}
           />
         </Field>
         <Field label="4H algo structure">
           <Select
-            options={GRADES}
+            options={criteria.grades}
             value={draft.algoStructure}
             onChange={(e) => update("algoStructure", e.target.value as TradeDraft["algoStructure"])}
           />
         </Field>
         <Field label="Zone quality">
           <Select
-            options={GRADES}
+            options={criteria.grades}
             value={draft.zoneQuality}
             onChange={(e) => update("zoneQuality", e.target.value as TradeDraft["zoneQuality"])}
           />
@@ -157,7 +160,7 @@ export function TradeForm({
       <div className="mt-6">
         <SectionTitle hint="Any tag forces a NO">Mistake tags</SectionTitle>
         <div className="flex flex-wrap gap-2">
-          {MISTAKE_TAGS.map((tag) => (
+          {criteria.mistakeTags.map((tag) => (
             <Chip
               key={tag}
               active={draft.mistakes.includes(tag)}
