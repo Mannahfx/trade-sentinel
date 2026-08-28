@@ -47,11 +47,11 @@ export const DEFAULT_MISTAKE_TAGS = [
   "Chased entry",
 ] as const;
 
-export type Instrument = (typeof INSTRUMENTS)[number];
-export type ZoneType = (typeof ZONE_TYPES)[number];
-export type Timeframe = (typeof TIMEFRAMES)[number];
-export type EntryTrigger = (typeof ENTRY_TRIGGERS)[number];
-export type Grade = (typeof GRADES)[number];
+export type Instrument = string;
+export type ZoneType = string;
+export type Timeframe = string;
+export type EntryTrigger = string;
+export type Grade = string;
 export type Outcome = (typeof OUTCOMES)[number];
 export type Direction = (typeof DIRECTIONS)[number];
 
